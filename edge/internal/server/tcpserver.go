@@ -7,6 +7,7 @@ import (
 	"github.com/zeromicro/go-zero/core/threading"
 	"net"
 	"time"
+	"zeroim/common/discovery"
 	"zeroim/common/libnet"
 	"zeroim/edge/internal/svc"
 	"zeroim/imrpc/imrpc"
@@ -125,4 +126,9 @@ func (srv *TCPServer) Logout(session *Session, msg *libnet.Message) error {
 	_ = session.Close()
 
 	return nil
+}
+
+func (srv *TCPServer) KqHeart() {
+	work := discovery.NewKqWorker(srv.svcCtx.Config.Etcd.Key, srv.svcCtx.Config.Etcd.Hosts, srv.svcCtx.Config.KqConf)
+	work.HeartBeat()
 }

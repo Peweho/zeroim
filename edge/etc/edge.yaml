@@ -11,3 +11,5 @@ IMRpc:
     Hosts:
       - 192.168.92.201:2379
     Key: imrpc.rpc
+
+KqConf:

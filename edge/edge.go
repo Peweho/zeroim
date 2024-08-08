@@ -43,8 +43,13 @@ func main() {
 		_ = tcpServer.Close()
 	}()
 	fmt.Printf("Starting tcp server at %s...\n", c.TCPListenOn)
+
 	threading.GoSafe(func() {
 		tcpServer.HandleRequest()
+	})
+	// 向etcd注册kq配置信息
+	threading.GoSafe(func() {
+		tcpServer.KqHeart()
 	})
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
